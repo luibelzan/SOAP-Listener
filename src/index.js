@@ -1,0 +1,26 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const configLoader_1 = __importDefault(require("../configLoader"));
+const data_source_1 = require("./data-source");
+const utils_1 = require("./utils");
+const PORT = configLoader_1.default.listenPort;
+const PORT2 = configLoader_1.default.listenPort2;
+const PORT3 = configLoader_1.default.listenPort3;
+const PORT4 = configLoader_1.default.listenPort4;
+const PORT5 = configLoader_1.default.listenPort5;
+const PORT6 = configLoader_1.default.listenPort6;
+const PORT7 = configLoader_1.default.listenPort7;
+const PORT8 = configLoader_1.default.listenPort8;
+const PORT9 = configLoader_1.default.listenPort9;
+(0, utils_1.listenToWebServices)(PORT, data_source_1.AppDataSource1);
+(0, utils_1.listenToWebServices)(PORT2, data_source_1.AppDataSource2);
+(0, utils_1.listenToWebServices)(PORT3, data_source_1.AppDataSource3);
+(0, utils_1.listenToWebServices)(PORT4, data_source_1.AppDataSource4);
+(0, utils_1.listenToWebServices)(PORT5, data_source_1.AppDataSource5);
+(0, utils_1.listenToWebServices)(PORT6, data_source_1.AppDataSource6);
+(0, utils_1.listenToWebServices)(PORT7, data_source_1.AppDataSource7);
+(0, utils_1.listenToWebServices)(PORT8, data_source_1.AppDataSource8);
+(0, utils_1.listenToWebServices)(PORT9, data_source_1.AppDataSource9);
