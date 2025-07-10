@@ -6,7 +6,7 @@ import { S31 } from '../entities/S31';
 import { S63 } from '../entities/S63';
 import { S65 } from '../entities/S65';
 import { DataSource } from 'typeorm';
-import { sendToClientBot } from '../config/telegramBotManager';
+import { sendToClientBot } from '../bot/telegramBotManager';
 
 const xmlResponse = `<?xml version="1.0" encoding="UTF-8"?>
 <soap:Envelope
