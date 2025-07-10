@@ -14,8 +14,6 @@ const PORT9 = config.listenPort9;
 
 listenToWebServices(PORT4, AppDataSource4);
 
-
-/*
 listenToWebServices(PORT, AppDataSource1);
 
 listenToWebServices(PORT2, AppDataSource2);
@@ -34,4 +32,3 @@ listenToWebServices(PORT8, AppDataSource8);
 
 listenToWebServices(PORT9, AppDataSource9);
 
-*/

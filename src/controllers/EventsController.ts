@@ -7,6 +7,10 @@ import { S63 } from '../entities/S63';
 import { S65 } from '../entities/S65';
 import { DataSource } from 'typeorm';
 import { sendToClientBot } from '../bot/telegramBotManager';
+import { DescripcionEventoContador } from '../entities/DescripcionEventoContador';
+import { DescripcionEventoConcentrador } from '../entities/DescripcionEventoConcentrador';
+import { DescripcionEventoLvs } from '../entities/DescripcionEventosLvs';
+import { DescripcionEventoSabt } from '../entities/DescripcionEventoSabt';
 
 const xmlResponse = `<?xml version="1.0" encoding="UTF-8"?>
 <soap:Envelope
@@ -172,8 +176,19 @@ async function processS13(report: any, idRpt: string, idPet: number, version: st
 
         // 🔔 Notificación por Telegram
         const dbName = dataSource.options.database as string;
-        const c = s13.c ?? 'N/A';
+        const c = s13.c;
         const et = s13.et;
+        const descripcionRepo = dataSource.getRepository(DescripcionEventoContador);
+        let descripcion = 'Descripcion no encontrada';
+
+        try {
+            const descripcionEvento = await descripcionRepo.findOneBy({ grpEvento: et, codEvento: c });
+            if (descripcionEvento) {
+                descripcion = descripcionEvento.descripcion;
+            }
+        } catch (dsecErr) {
+            console.warn(`No se pudo obtener la descripción para et=${s13.et}, c=${s13.c}`);
+        }
 
         const message =
             `<b>📥 Reporte recibido</b>
@@ -181,7 +196,8 @@ async function processS13(report: any, idRpt: string, idPet: number, version: st
             📁 <b>Cliente:</b> ${dbName}
             📅 <b>Fecha:</b> ${fecha}
             🔢 <b>C:</b> ${c}
-            ⚙️ <b>Et:</b> ${et}`;
+            ⚙️ <b>Et:</b> ${et}
+            📝 <b>Descripción:</b> ${descripcion}`;
 
         sendToClientBot(dbName, message);
     } catch (error) {
@@ -209,8 +225,19 @@ async function processS15(report: any, idRpt: string, idPet: number, version: st
 
         // 🔔 Notificación por Telegram
         const dbName = dataSource.options.database as string;
-        const c = s15.c ?? 'N/A';
+        const c = s15.c;
         const et = s15.et;
+        const descripcionRepo = dataSource.getRepository(DescripcionEventoConcentrador);
+        let descripcion = 'Descripcion no encontrada';
+
+        try {
+            const descripcionEvento = await descripcionRepo.findOneBy({ grpEventoDc: et, codEventoDc: c });
+            if (descripcionEvento) {
+                descripcion = descripcionEvento.descripcion;
+            }
+        } catch (dsecErr) {
+            console.warn(`No se pudo obtener la descripción para et=${s15.et}, c=${s15.c}`);
+        }
 
         const message =
             `<b>📥 Reporte recibido</b>
@@ -218,7 +245,8 @@ async function processS15(report: any, idRpt: string, idPet: number, version: st
             📁 <b>Cliente:</b> ${dbName}
             📅 <b>Fecha:</b> ${fecha}
             🔢 <b>C:</b> ${c}
-            ⚙️ <b>Et:</b> ${et}`;
+            ⚙️ <b>Et:</b> ${et}
+            📝 <b>Descripción:</b> ${descripcion}`;
 
         sendToClientBot(dbName, message);
     } catch (error) {
@@ -288,8 +316,19 @@ async function processS63(report: any, idRpt: string, idPet: number, version: st
 
             // 🔔 Notificación por Telegram
             const dbName = dataSource.options.database as string;
-            const c = s63.c ?? 'N/A';
+            const c = s63.c;
             const et = s63.et;
+            const descripcionRepo = dataSource.getRepository(DescripcionEventoLvs);
+            let descripcion = 'Descripcion no encontrada';
+
+            try {
+                const descripcionEvento = await descripcionRepo.findOneBy({ grpEvento: et, codEvento: c });
+                if (descripcionEvento) {
+                    descripcion = descripcionEvento.descripcion;
+                }
+            } catch (dsecErr) {
+                console.warn(`No se pudo obtener la descripción para et=${s63.et}, c=${s63.c}`);
+            }
 
             const message =
                 `<b>📥 Reporte recibido</b>
@@ -297,7 +336,8 @@ async function processS63(report: any, idRpt: string, idPet: number, version: st
             📁 <b>Cliente:</b> ${dbName}
             📅 <b>Fecha:</b> ${fecha}
             🔢 <b>C:</b> ${c}
-            ⚙️ <b>Et:</b> ${et}`;
+            ⚙️ <b>Et:</b> ${et}
+            📝 <b>Descripción:</b> ${descripcion}`;
 
             sendToClientBot(dbName, message);
         }
@@ -330,19 +370,31 @@ async function processS65(report: any, idRpt: string, idPet: number, version: st
             console.log('S65 event inserted on DB ', fecha, `${dataSource.options.database}`, '/n');
 
             // 🔔 Notificación por Telegram
-        const dbName = dataSource.options.database as string;
-        const c = s65.c ?? 'N/A';
-        const et = s65.et;
+            const dbName = dataSource.options.database as string;
+            const c = s65.c;
+            const et = s65.et;
+            const descripcionRepo = dataSource.getRepository(DescripcionEventoSabt);
+            let descripcion = 'Descripcion no encontrada';
 
-        const message = 
-            `<b>📥 Reporte recibido</b>
+            try {
+                const descripcionEvento = await descripcionRepo.findOneBy({ grpEvento: et, codEvento: c });
+                if (descripcionEvento) {
+                    descripcion = descripcionEvento.descripcion;
+                }
+            } catch (dsecErr) {
+                console.warn(`No se pudo obtener la descripción para et=${s65.et}, c=${s65.c}`);
+            }
+
+            const message =
+                `<b>📥 Reporte recibido</b>
             🗂 <b>Tipo:</b> S65
             📁 <b>Cliente:</b> ${dbName}
             📅 <b>Fecha:</b> ${fecha}
             🔢 <b>C:</b> ${c}
-            ⚙️ <b>Et:</b> ${et}`;
+            ⚙️ <b>Et:</b> ${et}
+            📝 <b>Descripción:</b> ${descripcion}`;
 
-        sendToClientBot(dbName, message);
+            sendToClientBot(dbName, message);
         }
     } catch (error) {
         console.error('Error al procesar S65:', error);
