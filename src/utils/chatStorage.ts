@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const CHAT_FILE = path.join(__dirname, '../../storage/chatIds.json');
+const CHAT_FILE = path.join(__dirname, '../storage/chatIds.json');
 
 type ChatStore = Record<string, string>;
 

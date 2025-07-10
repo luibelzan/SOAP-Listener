@@ -2,7 +2,7 @@
 
 import { Entity, PrimaryColumn, Column } from 'typeorm';
 
-@Entity({ name: 't_descripcion_eventos_lvs', schema: 'core' })
+@Entity({ name: 't_descripcion_eventos_lvs' })
 export class DescripcionEventoLvs {
     @PrimaryColumn({ name: 'grp_evento', type: 'int' })
     grpEvento: number;
